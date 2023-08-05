@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multi-Page Survey</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Survey - Page 2</h1>
+  <form id="surveyForm">
+    <label for="question2">Question 2: What is your age?</label>
+    <input type="text" id="question2" required>
+    <br>
+    <button class="button" onclick="saveAndNext(3)"><a href="3.html">Next</a></button>
+  </form>
+  <script>
+    function submitData() {
+      const formData = new FormData(document.getElementById('surveyForm'));
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      fetch('/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok) {
+          window.alert('Survey submitted successfully!');
+        }
+      })
+      .catch(error => {
+        console.error('Error submitting data:', error);
+      });
+    }
+  </script>
+</body>
+</html>
